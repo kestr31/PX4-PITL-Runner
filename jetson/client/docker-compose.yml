@@ -8,11 +8,7 @@ services:
       DEBUG_MODE:                 ${ROS2_XRCE_DEBUG_MODE}
       EXPORT_ENV:                 ${ROS2_XRCE_SIM_EXPORT_ENV}
       # -------------------------------------------------
-    ports:
-      - 8888:8888
-    networks:
-      sitl-net:
-        ipv4_address: ${CONTAINER_ROS2_UXRCE_ADDR}
+    network_mode: "host"
     container_name:   ${CONTAINER_ROS2_UXRCE_NAME}
     hostname:         ${CONTAINER_ROS2_UXRCE_HOSTNAME}
     image:            ${CONTAINER_ROS2_UXRCE_IMAGE}
@@ -28,23 +24,10 @@ services:
       DEBUG_MODE:                 ${ROS2_NODE_001_DEBUG_MODE}
       EXPORT_ENV:                 ${ROS2_NODE_001_SIM_EXPORT_ENV}
       # -------------------------------------------------
-    networks:
-      sitl-net:
-        ipv4_address: ${CONTAINER_ROS2_NODE_001_ADDR}
+    network_mode: "host"
     container_name:   ${CONTAINER_ROS2_NODE_001_NAME}
     hostname:         ${CONTAINER_ROS2_NODE_001_HOSTNAME}
     image:            ${CONTAINER_ROS2_NODE_001_IMAGE}
-
-
-networks:
-  sitl-net:
-    name: ${CONTAINER_NET_NAME}
-    driver: bridge
-    ipam:
-      driver: default
-      config: 
-        - subnet:   ${CONTAINER_NET_SUBNET}
-          gateway:  ${CONTAINER_NET_GATEWAY}
 
 # DOCKER COMPOSE UP COMMAND
 # docker compose -f docker-compose.yml --env-file run.env up
