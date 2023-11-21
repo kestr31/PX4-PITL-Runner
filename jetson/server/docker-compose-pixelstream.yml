@@ -160,26 +160,6 @@ services:
     # ︿ ︿ ︿ ︿ ︿ ︿ ︿ ︿ ︿ ︿ ︿ ︿ ︿ ︿ ︿ ︿ ︿
 
 
-  ros2-xrce:
-    depends_on:
-      - qgc
-      - sim
-      - px4-001
-    environment:
-      # -----------STATIC VALUE DO NOT MODIFY------------
-      NVIDIA_DRIVER_CAPABILITIES: ${NVIDIA_DRIVER_CAPABILITIES}
-      ROS_DOMAIN_ID:              ${ROS_DOMAIN_ID}
-      DEBUG_MODE:                 ${ROS2_XRCE_DEBUG_MODE}
-      EXPORT_ENV:                 ${ROS2_XRCE_SIM_EXPORT_ENV}
-      # ------------------------------------------------- 
-    networks:
-      sitl-net:
-        ipv4_address: ${CONTAINER_ROS2_UXRCE_ADDR}
-    container_name:   ${CONTAINER_ROS2_UXRCE_NAME}
-    hostname:         ${CONTAINER_ROS2_UXRCE_HOSTNAME}
-    image:            ${CONTAINER_ROS2_UXRCE_IMAGE}
-
-
   ros2-airsim:
     depends_on:
       - airsim
@@ -193,9 +173,10 @@ services:
       DEBUG_MODE:                 ${ROS2_AIRSIM_DEBUG_MODE}
       EXPORT_ENV:                 ${ROS2_AIRSIM_EXPORT_ENV}
       # -------------------------------------------------
-    networks:
-      sitl-net:
-        ipv4_address: ${CONTAINER_ROS2_AIRSIM_ADDR}
+    # networks:
+    #   sitl-net:
+    #     ipv4_address: ${CONTAINER_ROS2_AIRSIM_ADDR}
+    network_mode: "host"
     container_name:   ${CONTAINER_ROS2_AIRSIM_NAME}
     hostname:         ${CONTAINER_ROS2_AIRSIM_HOSTNAME}
     image:            ${CONTAINER_ROS2_AIRSIM_IMAGE}
