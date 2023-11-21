@@ -19,6 +19,7 @@ services:
 
 
   ros2-node-001:
+    depends_on:
       - ros2-xrce
     environment:
       # -----------STATIC VALUE DO NOT MODIFY------------
