@@ -1,0 +1,47 @@
+version: "3"
+services:
+  ros2-xrce:
+    depends_on:
+      - qgc
+      - sim
+      - px4-001
+    environment:
+      # -----------STATIC VALUE DO NOT MODIFY------------
+      NVIDIA_DRIVER_CAPABILITIES: ${NVIDIA_DRIVER_CAPABILITIES}
+      ROS_DOMAIN_ID:              ${ROS_DOMAIN_ID}
+      DEBUG_MODE:                 ${ROS2_XRCE_DEBUG_MODE}
+      EXPORT_ENV:                 ${ROS2_XRCE_SIM_EXPORT_ENV}
+      # -------------------------------------------------
+    ports:
+      - 8888:8888
+    networks:
+      sitl-net:
+        ipv4_address: ${CONTAINER_ROS2_UXRCE_ADDR}
+    container_name:   ${CONTAINER_ROS2_UXRCE_NAME}
+    hostname:         ${CONTAINER_ROS2_UXRCE_HOSTNAME}
+    image:            ${CONTAINER_ROS2_UXRCE_IMAGE}
+
+
+  ros2-node-001:
+    depends_on:
+      - airsim    
+      - px4-001
+      - qgc
+      - ros2-xrce
+      - sim
+    environment:
+      # -----------STATIC VALUE DO NOT MODIFY------------
+      NVIDIA_DRIVER_CAPABILITIES: ${NVIDIA_DRIVER_CAPABILITIES}
+      ROS_DOMAIN_ID:              ${ROS_DOMAIN_ID}
+      DEBUG_MODE:                 ${ROS2_NODE_001_DEBUG_MODE}
+      EXPORT_ENV:                 ${ROS2_NODE_001_SIM_EXPORT_ENV}
+      # -------------------------------------------------
+    networks:
+      sitl-net:
+        ipv4_address: ${CONTAINER_ROS2_NODE_001_ADDR}
+    container_name:   ${CONTAINER_ROS2_NODE_001_NAME}
+    hostname:         ${CONTAINER_ROS2_NODE_001_HOSTNAME}
+    image:            ${CONTAINER_ROS2_NODE_001_IMAGE}
+
+# DOCKER COMPOSE UP COMMAND
+# docker compose -f docker-compose.yml --env-file run.env up
