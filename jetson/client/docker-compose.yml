@@ -43,5 +43,16 @@ services:
     hostname:         ${CONTAINER_ROS2_NODE_001_HOSTNAME}
     image:            ${CONTAINER_ROS2_NODE_001_IMAGE}
 
+
+networks:
+  sitl-net:
+    name: ${CONTAINER_NET_NAME}
+    driver: bridge
+    ipam:
+      driver: default
+      config: 
+        - subnet:   ${CONTAINER_NET_SUBNET}
+          gateway:  ${CONTAINER_NET_GATEWAY}
+
 # DOCKER COMPOSE UP COMMAND
 # docker compose -f docker-compose.yml --env-file run.env up
